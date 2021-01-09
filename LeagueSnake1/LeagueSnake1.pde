@@ -6,13 +6,13 @@
 class Segment {
 
 //Add x and y member variables. They will hold the corner location of each segment of the snake.
-int snakeX;
-int snakeY;
+int segX;
+int segY;
 
 // Add a constructor with parameters to initialize each variable.
-public void makeSnake (int snakeX, int snakeY) {
-  this.snakeX = snakeX;
-  this.snakeY = snakeY;
+  public Segment (int x, int y) {
+  this.segX = x;
+  this.segY = y;
 }
 
 
@@ -23,6 +23,8 @@ public void makeSnake (int snakeX, int snakeY) {
 // ***** GAME VARIABLES *****
 // All the game variables that will be shared by the game methods are here
 //*
+int headX;
+int headY;
 int foodX;
 int foodY;
 
