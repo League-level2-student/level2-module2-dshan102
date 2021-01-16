@@ -79,6 +79,7 @@ void drawSnake() {
   //Draw the head of the snake followed by its tail
   fill(0,255,0);
   rect(head.segX, head.segY, 10, 10);
+  manageTail();
 }
 
 
@@ -100,13 +101,18 @@ void manageTail() {
   checkTailCollision();
   drawTail();
   rect(head.segX, head.segY, 10, 10);
-  tail.remove(1);
+  tail.remove(0);
   
 }
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
 //ask about changing hitbox
+for(int i=0; i<tail.size(); i++) {
+  if(head.segX==tail.get(i).segX && head.segY==tail.get(i).segY) {
+    tail = new ArrayList <Segment>();
+  }
+}
   
 }
 
@@ -181,6 +187,7 @@ void eat() {
   //When the snake eats the food, its tail should grow and more food appear
 if(head.segX == foodX && head.segY == foodY) {
   foodCounter +=1;
+  tail.add(new Segment(head.segX, head.segY));
   dropFood();
 }
 }
