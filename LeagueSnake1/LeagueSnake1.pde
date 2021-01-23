@@ -41,8 +41,8 @@ ArrayList <Segment> tail = new ArrayList <Segment>();
 
 void setup() {
 size(500,500);
-head = new Segment(headX, headY);
-frameRate(100); 
+head = new Segment(250, 250);
+frameRate(20); 
 dropFood();
 }
 
@@ -62,11 +62,9 @@ void dropFood() {
 void draw() {
   background(0,0,255);
   drawFood();
-  keyPressed();
   move();
   drawSnake();
   eat();
-
 }
 
 void drawFood() {
@@ -91,6 +89,7 @@ void drawSnake() {
 void drawTail() {
   //Draw each segment of the tail 
 for(int i=0; i<tail.size(); i++) {
+  fill(0,255,0);
   rect(tail.get(i).segX,tail.get(i).segY, 10, 10);
 }
 }
@@ -100,17 +99,17 @@ void manageTail() {
   //This produces the illusion of the snake tail moving.
   checkTailCollision();
   drawTail();
-  rect(head.segX, head.segY, 10, 10);
+  tail.add(new Segment(head.segX, head.segY));
   tail.remove(0);
   
 }
 
 void checkTailCollision() {
-  //If the snake crosses its own tail, shrink the tail back to one segment
-//ask about changing hitbox
 for(int i=0; i<tail.size(); i++) {
   if(head.segX==tail.get(i).segX && head.segY==tail.get(i).segY) {
+    foodCounter=1;
     tail = new ArrayList <Segment>();
+    tail.add(new Segment(head.segX, head.segY));
   }
 }
   
@@ -125,10 +124,10 @@ for(int i=0; i<tail.size(); i++) {
 
 void keyPressed() {
   //Set the direction of the snake according to the arrow keys pressed
-  if(keyCode == 38) {
+  if(keyCode == 38 && direction!= DOWN) {
     direction = UP;
   }
-  if (keyCode == 40) {
+  if (keyCode == 40 && direction != UP) {
     direction = DOWN;
   }
   if (keyCode == 37) {
@@ -146,19 +145,19 @@ void move() {
   switch(direction) {
   case UP:
     // move head up here 
-    head.segY--;
+    head.segY-=10;
     break;
   case DOWN:
     // move head down here 
-    head.segY++;
+    head.segY+=10;
     break;
   case LEFT:
    // figure it out 
-   head.segX--;
+   head.segX-=10;
     break;
   case RIGHT:
     // mystery code goes here 
-    head.segX++;
+    head.segX+=10;
     break;
   }
   checkBoundaries();
@@ -187,7 +186,8 @@ void eat() {
   //When the snake eats the food, its tail should grow and more food appear
 if(head.segX == foodX && head.segY == foodY) {
   foodCounter +=1;
-  tail.add(new Segment(head.segX, head.segY));
   dropFood();
+  fill(0,255,0);
+  tail.add(new Segment(head.segX, head.segY));
 }
 }
